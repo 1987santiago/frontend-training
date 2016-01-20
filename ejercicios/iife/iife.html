@@ -7,18 +7,22 @@
     <link rel="stylesheet" href="iife.css">
     <script type="text/javascript">
       // add IIFEs in order for the tests to pass
+      var app = (function() {
 
-      var counter = 1;
-      var app = {
-        state: 'initialized',
-        users: [],
-        log: function log() {
-          console.log.apply(console, arguments);
-        },
-        getCounter: function () {
-          return counter;
-        }
-      };
+        var counter = 1;
+        var app = {
+          state: 'initialized',
+          users: [],
+          log: function log() {
+            console.log.apply(console, arguments);
+          },
+          getCounter: function () {
+            return counter;
+          }
+        };
+
+        return app;
+      })();
     </script>
     <script type="text/javascript">
       /////////////////////////////////////
