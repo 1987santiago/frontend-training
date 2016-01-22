@@ -8,16 +8,21 @@
     <script type="text/javascript" src="chaining-and-namespaces-pre-test.js"></script>
     <script type="text/javascript">
     /////////////////// PARTE 1 //////////////////
-    // Declarar una variable 'app' de forma tal que si no existe previamente se le 
+    // Declarar una variable 'app' de forma tal que si no existe previamente se le
     // asigne un objeto nuevo y si existe que no se modifique su valor anterior
+    var app = app || {};
 
     /////////////////// PARTE 2 //////////////////
     // Agregar a 'app' un método llamado 'status' que reciba por parámetro
     // un string y lo asigne cómo valor a la propiedad 'status' de 'app'.
     // El método debe poder ser utilizado con chaining.
+    app.status = function (status) {
+      this.status = status;
+      return this;
+    };
 
     /////////////////// PARTE 3 //////////////////
-    // Agregar a 'app' un método 'extend' que reciba cómo primer parámetro 
+    // Agregar a 'app' un método 'extend' que reciba cómo primer parámetro
     // un objeto y cómo segundo parámetro una string delimitada por puntos.
     // La función deberá extender el objeto para lograr anidación de objetos.
     // Ejemplo: extend(app, 'app.modA.modB.modc') modifica 'app' de la siguiente forma
@@ -31,6 +36,16 @@
     // y retorna el objeto correspondiente a la última anidación (modC)
     // hint: la primera sección hasta el primer punto del segundo parámetro
     // debe descartarse
+    app.extend = function (obj, str) {
+      var data = str.split('.');
+      data.forEach(function(el, i, array){
+        addProperty.call(obj, el);
+      });
+    };
+
+    function addProperty (property) {
+      this[property] = {};
+    }
 
     </script>
     <script type="text/javascript">
@@ -90,7 +105,7 @@
     </div>
     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display:none">
       <defs>
-      
+
       <filter id="squiggly-0">
       <feTurbulence id="turbulence" baseFrequency="0.02" numOctaves="3" result="noise" seed="0"/>
       <feDisplacementMap id="displacement" in="SourceGraphic" in2="noise" scale="2" />
@@ -99,7 +114,7 @@
       <feTurbulence id="turbulence" baseFrequency="0.02" numOctaves="3" result="noise" seed="1"/>
       <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
       </filter>
-      
+
       <filter id="squiggly-2">
       <feTurbulence id="turbulence" baseFrequency="0.02" numOctaves="3" result="noise" seed="2"/>
       <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
@@ -108,7 +123,7 @@
       <feTurbulence id="turbulence" baseFrequency="0.02" numOctaves="3" result="noise" seed="3"/>
       <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
       </filter>
-      
+
       <filter id="squiggly-4">
       <feTurbulence id="turbulence" baseFrequency="0.02" numOctaves="3" result="noise" seed="4"/>
       <feDisplacementMap in="SourceGraphic" in2="noise" scale="1" />

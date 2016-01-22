@@ -16,10 +16,16 @@
     </script>
     <script type="text/javascript">
     // escribir el código de la función 'contarPares'
-    // que recibe un array (de números) y cuente cuantos elementos pares 
+    // que recibe un array (de números) y cuente cuantos elementos pares
     // tiene el array.
     // hint: usar el método 'filter' de arrays
-    function contarPares(arr){}
+    function contarPares(arr) {
+      return arr.filter(esPar).length;
+    }
+
+    function esPar(value) {
+      return (value % 2 === 0);
+    }
 
     assertEqual(contarPares([1,2,3]), 1);
     assertEqual(contarPares([4,6,8]), 3);
@@ -30,13 +36,33 @@
     <script type="text/javascript">
     // escribir el código de la función 'contarPalabrasCapicuaQueContienen' que reciba
     // un array (de palabras) cómo primer parámetro y un caracter cómo segundo parámetro
-    // deberá retornar la cantidad de palabras en el array ue son capicua y 
+    // deberá retornar la cantidad de palabras en el array ue son capicua y
     // también contiene el caracter del segundo parámetro
     // hint: utilizar el método 'filter' de array
     // hint2: escribir una función 'aplicarFiltros' que reciba dos funciones, retorne
     // una nueva función que aplique las funciones recibidas y retorne su valor booleano
     // hint3: una palabra es capicua cuando es lo mismo leerla de izquierda a derecha o de derecha
     // a izquierda
+
+    function contarPalabrasCapicuaQueContienen(arr, character) {
+      return arr.filter(aplicarFiltros(esCapicua, contiene(character)));
+    }
+
+    function aplicarFiltros(fn1, fn2) {
+      return function(el) {
+        return fn1(el) && fn2(el);
+      };
+    }
+
+    function esCapicua(str) {
+      return str == str.split('').reverse().join('');
+    }
+
+    function contiene(letra) {
+      return function(palabra) {
+        return palabra.indexOf(letra) !== -1;
+      }
+    }
 
     assertEqual(contarPalabrasCapicuaQueContienen(['otto', 'arenera', 'reconocer', 'somos', 'foo'], 'a'), 1);
     assertEqual(contarPalabrasCapicuaQueContienen(['otto', 'arenera', 'reconocer', 'somos', 'foo'], 'w'), 0);
@@ -91,7 +117,7 @@
     </div>
     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display:none">
       <defs>
-      
+
       <filter id="squiggly-0">
       <feTurbulence id="turbulence" baseFrequency="0.02" numOctaves="3" result="noise" seed="0"/>
       <feDisplacementMap id="displacement" in="SourceGraphic" in2="noise" scale="2" />
@@ -100,7 +126,7 @@
       <feTurbulence id="turbulence" baseFrequency="0.02" numOctaves="3" result="noise" seed="1"/>
       <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
       </filter>
-      
+
       <filter id="squiggly-2">
       <feTurbulence id="turbulence" baseFrequency="0.02" numOctaves="3" result="noise" seed="2"/>
       <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
@@ -109,7 +135,7 @@
       <feTurbulence id="turbulence" baseFrequency="0.02" numOctaves="3" result="noise" seed="3"/>
       <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
       </filter>
-      
+
       <filter id="squiggly-4">
       <feTurbulence id="turbulence" baseFrequency="0.02" numOctaves="3" result="noise" seed="4"/>
       <feDisplacementMap in="SourceGraphic" in2="noise" scale="1" />
