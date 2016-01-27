@@ -36,16 +36,46 @@
     // y retorna el objeto correspondiente a la última anidación (modC)
     // hint: la primera sección hasta el primer punto del segundo parámetro
     // debe descartarse
-    app.extend = function (obj, str) {
-      var data = str.split('.');
-      data.forEach(function(el, i, array){
-        addProperty.call(obj, el);
-      });
-    };
+    // app.extend = function (obj, str) {
+    //   'use strict';
+    //   var data = str.split('.'),
+    //       newObj;
+    //   data.forEach(function(el, i, array) {
+    //     if (i === 0) { return false; }
+    //     if (!newObj) {
+    //       newObj = addModule.call(obj, el);
+    //     } else {
+    //       newObj = addModule.call(newObj, el);
+    //     }
+    //   });
 
-    function addProperty (property) {
-      this[property] = {};
-    }
+    //   return newObj;
+    //   // deberia retornar "moduleB", siendo "moduleB" un objeto literal
+    // };
+
+    // function addModule (module) {
+    //   'use strict';
+    //   this[module] = this[module] || { name: module};
+    //   return this[module];
+    // }
+
+    app.extend = function (obj, str) {
+      'use strict';
+      var data = str.split('.'),
+          newObj = obj;
+
+      data.shift(); // removemos el primer dato
+
+      data.forEach(function(el) {
+        if (!newObj[el]) {
+          newObj[el] = {};
+        }
+        newObj = newObj[el];
+      });
+
+      return newObj;
+      // deberia retornar "moduleB", siendo "moduleB" un objeto literal
+    };
 
     </script>
     <script type="text/javascript">
@@ -56,7 +86,10 @@
     console.log('Avoid clobbering test passed.');
     assertEqual(app.status('active'), app);
     console.log('Method chaining test passed.');
-    assertEqual(app.extend(app, 'MyApplication.moduleA.moduleB'), app.moduleA.moduleB);
+
+    assertEqual(app.extend(app, 'MyApplication.moduleA.moduleB.moduleC'), app.moduleA.moduleB);
+    console.log(app.moduleA.moduleB);
+    // if(!app.moduleA.moduleB) throw new Error('moduleB is not defined.');
     console.log('All tests passed.');
     </script>
   </head>
