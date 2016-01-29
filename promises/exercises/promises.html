@@ -8,18 +8,75 @@
     <script type="text/javascript">
 
     /////////// Ejercicio 1 //////////////
-    // Escribir un wrapper "parseJSON" de JSON.parse que reciba un parámetro, 
-    // que devuelva una promise y se resuelva o se rejecte según si 
+    // Escribir un wrapper "parseJSON" de JSON.parse que reciba un parámetro,
+    // que devuelva una promise y se resuelva o se rejecte según si
     // el elemento pasado por parámetro es json válido o no
+    function parseJSON(param) {
+      'use strict';
+
+      var json,
+          promise;
+
+      promise = new Promise(function(resolve, reject) {
+
+        try {
+          json = JSON.parse(param);
+          resolve(json);
+        } catch (e) {
+          reject(e);
+        }
+
+      });
+
+      return promise;
+    }
 
     /////////// Ejercicio 2 //////////////
     // Escribir una función "arePrime" que acepte una promise o array de promises por parámetro
     // y resuelva únicamente si todas las promises recibidas por parámetro se resolvieron
     // y además si el valor con el cual se resolvieron es un número y dicho número es primo
+    function arePrime(promises) {
+
+      var allPrime = true,
+          p;
+
+      p = Promise.all(promises).then(function(values) {
+
+        values.forEach(function(value){
+
+          if (!isPrime(value)) {
+            allPrime = false;
+          }
+
+        });
+
+        if (allPrime) {
+
+        }
+
+      });
+
+      return p;
+
+    }
+
+    function isPrime(n) {
+      if (isNaN(n) || !isFinite(n) || n%1 || n<2) return false;
+      var m=Math.sqrt(n);
+      for (var i=2;i<=m;i++) if (n%i==0) return false;
+      return true;
+    }
+
+    var p1 = Promise.resolve(3);
+    var p2 = 1337;
+    var p3 = new Promise(function(resolve, reject) {
+      setTimeout(resolve, 100, "foo");
+    });
+
+    arePrime([p1, p2, p3]);
 
     </script>
     <script type="text/javascript" src="promises-post.js"></script>
-    </script>
   </head>
   <body>
   </body>
