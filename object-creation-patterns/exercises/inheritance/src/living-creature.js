@@ -7,7 +7,7 @@ var Walker = require('./walker');
 // - breath            : It increments the amount of remaining oxygen
 // - consumeOxygen     : It decrements the amount of remaining oxygen
 // - hasDied           : It returns true if the amount of oxygen is zero and false otherwise
-function LivingCriature(oxygenAmount, legs) {
+function LivingCreature(oxygenAmount, legs) {
 	if (isNaN(oxygenAmount)) {
 		throw new Error('The oxygen provided is not a number');
 	}
@@ -23,14 +23,14 @@ function LivingCriature(oxygenAmount, legs) {
 	Walker.call(this, legs);
 }
 
-LivingCriature.prototype = Object.create(Walker.prototype);
-LivingCriature.prototype.constructor = LivingCriature;
+LivingCreature.prototype = Object.create(Walker.prototype);
+LivingCreature.prototype.constructor = LivingCreature;
 
-LivingCriature.prototype.getRemainingOxygen = function() {
+LivingCreature.prototype.getRemainingOxygen = function() {
 	return this._oxygen;
 };
 
-LivingCriature.prototype.breath = function() {
+LivingCreature.prototype.breath = function() {
 	// if (isNaN(amount)) {
 	// 	throw new Error('The oxygen provided is not a number');
 	// }
@@ -41,7 +41,7 @@ LivingCriature.prototype.breath = function() {
 	}
 };
 
-LivingCriature.prototype.consumeOxygen = function() {
+LivingCreature.prototype.consumeOxygen = function() {
 	if (this.hasDied()) {
 		throw new Error('It has died');
 	} else {
@@ -49,8 +49,8 @@ LivingCriature.prototype.consumeOxygen = function() {
 	}
 };
 
-LivingCriature.prototype.hasDied = function() {
+LivingCreature.prototype.hasDied = function() {
 	return (this._oxygen === 0);
 };
 
-module.exports = LivingCriature;
+module.exports = LivingCreature;

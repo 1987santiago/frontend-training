@@ -1,7 +1,7 @@
 var LivingCriature = require('./living-criature');
 var Walker = require('./walker');
 // * inherits from
-// - LivingCriature
+// - LivingCreature
 // - Walker
 // * constructor parameters:
 // - the ones required to be passed to their ancestor
@@ -10,14 +10,14 @@ var Walker = require('./walker');
 //   - must throw an exception if it has died
 //   - must consume oxygen and walk
 
-function WalkingCriature(oxygen, legs) {
+function WalkingCreature(oxygen, legs) {
 	LivingCriature.call(this, oxygen, legs);
 }
 
-WalkingCriature.prototype = Object.create(LivingCriature.prototype);
-WalkingCriature.prototype.constructor = WalkingCriature;
+WalkingCreature.prototype = Object.create(LivingCriature.prototype);
+WalkingCreature.prototype.constructor = WalkingCreature;
 
-WalkingCriature.prototype.walk = function() {
+WalkingCreature.prototype.walk = function() {
 	if (LivingCriature.prototype.hasDied.call(this)) {
 		throw new Error('It has died');
 	}
@@ -29,4 +29,4 @@ WalkingCriature.prototype.walk = function() {
 	}
 };
 
-module.exports = WalkingCriature;
+module.exports = WalkingCreature;
