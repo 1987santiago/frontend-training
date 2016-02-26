@@ -3,6 +3,10 @@ import assert from "assert";
 import LivingCreature from "../src/living-creature";
 import Walker from "../src/walker";
 import WalkingCreature  from "../src/walking-creature";
+import Interface from "../src/interface";
+
+const walkerInterface = new Interface(Object.keys(Walker.prototype));
+const livingCreatureInterface = new Interface(Object.keys(LivingCreature.prototype));
 
 describe("WalkingCreature", () => {
 
@@ -11,7 +15,7 @@ describe("WalkingCreature", () => {
         assert(typeof WalkingCreature === "function");
     });
 
-    it.skip("must throw an error if invoked directly without new", () => {
+    it("must throw an error if invoked directly without new", () => {
 
         assert.throws(() => {
 
@@ -42,23 +46,21 @@ describe("WalkingCreature", () => {
 
         const wc = new WalkingCreature(initialOxygen, legs);
 
-        const actual   = wc instanceof LivingCreature;
-        const expected = true;
-
-        assert(actual === expected);
+        assert.doesNotThrow(() => {
+            livingCreatureInterface.ensureImplements(wc);
+        });
     });
 
-    it("must construct objects that inherit from: Walker", () => {
+    it.skip("must construct objects that inherit from: Walker", () => {
 
         const initialOxygen = 2;
         const legs = 2;
 
         const wc = new WalkingCreature(initialOxygen, legs);
 
-        const actual   = wc instanceof Walker;
-        const expected = true;
-
-        assert(actual === expected);
+        assert.doesNotThrow(() => {
+            walkerInterface.ensureImplements(wc);
+        });
     });
 
     describe("prototype", () => {

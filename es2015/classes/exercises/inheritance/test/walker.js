@@ -5,12 +5,12 @@ import Walker from "../src/walker";
 
 describe("Walker", () => {
 
-    it.skip("must be a function", () => {
+    it("must be a function", () => {
 
         assert(typeof Walker === "function");
     });
 
-    it.skip("must throw an error if invoked directly without new", () => {
+    it("must throw an error if invoked directly without new", () => {
 
         assert.throws(() => {
 
@@ -21,7 +21,7 @@ describe("Walker", () => {
         });
     });
 
-    it.skip("must construct objects with prototypes: Walker.prototype", () => {
+    it("must construct objects with prototypes: Walker.prototype", () => {
 
         const initialOxygen = 2;
         const legs = 2;
@@ -47,7 +47,7 @@ describe("Walker", () => {
         assert(actual === expected);
     });
 
-    it.skip("must throw an error if the amount of legs provided is not a number", () => {
+    it("must throw an error if the amount of legs provided is not a number", () => {
 
         assert.throws(() => {
 
@@ -57,7 +57,7 @@ describe("Walker", () => {
         });
     });
 
-    it.skip("must throw an error if the amount of legs provided is zero", () => {
+    it("must throw an error if the amount of legs provided is zero", () => {
 
         assert.throws(() => {
 
@@ -67,7 +67,7 @@ describe("Walker", () => {
         });
     });
 
-    it.skip("must throw an error if the amount of legs provided is an odd number", () => {
+    it("must throw an error if the amount of legs provided is an odd number", () => {
 
         assert.throws(() => {
 
@@ -77,7 +77,7 @@ describe("Walker", () => {
         });
     });
 
-    it.skip("must not throw any error if the amount of legs provided is an even number greater than zero", () => {
+    it("must not throw any error if the amount of legs provided is an even number greater than zero", () => {
 
         assert.doesNotThrow(() => {
 
@@ -91,7 +91,7 @@ describe("Walker", () => {
 
         describe(".getLegs(): number", () => {
 
-            it.skip("must return the number of legs provided in the initialization", () => {
+            it("must return the number of legs provided in the initialization", () => {
 
                 const legs = 2;
 
@@ -106,7 +106,7 @@ describe("Walker", () => {
 
         describe(".getSteps(): number", () => {
 
-            it.skip("must return 0 if it walk has not yet been invoked", () => {
+            it("must return 0 if it walk has not yet been invoked", () => {
 
                 const legs = 2;
 
@@ -121,7 +121,7 @@ describe("Walker", () => {
 
         describe(".walk()", () => {
 
-            it.skip("must increment the amount of steps by 1", () => {
+            it("must increment the amount of steps by 1", () => {
 
                 const legs = 2;
 
