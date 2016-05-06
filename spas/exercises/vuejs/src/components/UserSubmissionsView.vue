@@ -4,6 +4,13 @@
     You will have to filter to leave only the ones that have type 'story'.
     To view the full docs on how the data is formatted you can see https://github.com/HackerNews/API#items
    -->
+   <item
+    v-for="submission in submissions"
+    :item="submission"
+    :index="$index | formatItemIndex"
+    track-by="id">
+  </item>
+
 </template>
 
 <script>
@@ -21,6 +28,7 @@ export default {
   data () {
     return {
       // here initialize the fields your view will need
+      submissions : []
     }
   },
 
@@ -38,11 +46,30 @@ export default {
 
       // user the 'store.emit' API to change the title emitting the 'titleChange' event
       // the title should be in the format: "username's submissions"
+      store.emit('titleChange', `${to.params.id}'s submissions`);
 
       // use the mentioned 'store.fetchUser' and 'store.fetchItems' to return an object
       // with the same fields you defined above
+
+      return store.fetchUser(to.params.id).then(user => {        
+        
+        return store.fetchItems(user.submitted).then(submitted => {
+          
+          const submissions = [];
+
+          submitted.forEach((item) => {
+            if (item.type === 'story') {
+              submissions.push(item);
+            }
+          });
+          
+          return { submissions };
+        });
+
+      });
     },
     deactivate () {
+      store.emit('titleChange', '');
       console.log('Router lifecycle: UserSubmissionsView deactivated.')
     },
     activate () {

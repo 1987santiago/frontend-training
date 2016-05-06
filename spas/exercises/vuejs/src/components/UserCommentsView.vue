@@ -37,14 +37,18 @@ export default {
     data ({ to }) {
       // Promise sugar syntax: return an object that contains Promise fields.
       // http://router.vuejs.org/en/pipeline/data.html#promise-sugar
-      document.title = `User's comments: ${to.params.id} | Vue.js HN Clone`;
-
 
       // user the 'store.emit' API to change the title emitting the 'titleChange' event
       // the title should be in the format: "username's comments"
+      document.title = `User's comments: ${to.params.id} | Vue.js HN Clone`;
+      store.emit('titleChange');
 
       // use the mentioned 'store.fetchUser' and 'store.fetchItems' to return an object
       // with the same fields you defined above
+      store.fetchUser(to.params.id).then((res) => {
+        console.log(res);
+      });
+
     },
 
     activate () {
