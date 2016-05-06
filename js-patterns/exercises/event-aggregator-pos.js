@@ -59,5 +59,5 @@
     assertEqual(result[0], true, 'Should have been called with the correct parameter.');
 
     console.log('All tests are passing.');
-  });
+ });
 })();

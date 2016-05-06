@@ -27,6 +27,7 @@
   mediator.publish(randomEvent, true);
   assertEqual(result[0], true, 'Should have been called with the correct parameter.');
 
+  randomEvent = Math.random();
   mediator.installTo(customObj);
   called = 0;
 

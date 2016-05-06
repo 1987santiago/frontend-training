@@ -11,21 +11,49 @@
         // and attach the function to each element of the DOM on the specified event parameter
         // HINT1: document.querySelectorAll is a great native API to select more than one element in the DOM
         var elements = document.querySelectorAll(selector);
-        elements.forEach(function(element, index){
-          element.addEventListener(event, handler);
-        });
+        if (elements) { 
+          Array.prototype.forEach.call(elements, function(element, index) {
+            element.addEventListener(event, handler);
+          });
+        }
       }
 
       var app = {};
 
+      app.listeners = []; // [{a: handlerA}, {b: handlerB}]
+
       // write a function that receives an event name and a function
       // it should add the specified function to a list of listeners for that event
-      app.on = function(eventName, handler) {};
+      // app.on = function(eventName, handler) {
+      //   var event = {};
+      //   event[eventName] = handler;
+      //   this.listeners.push(event);
+      // };
+      app.on = function(eventName, handler) {
+        if (this.listeners[eventName]) {
+          this.listeners[eventName].push(handler);
+        } else {
+          this.listeners[eventName] = [handler];
+        }
+      };
 
       // write a function that receives an event name and an optional parameter
       // it should look on the list of registered listeners for all the ones that match for the specified event name
       // and call the listener function with the optional parameter as only argument
-      app.trigger = function(eventName, data) {};
+      // app.trigger = function(eventName, data) {
+      //   this.listeners.forEach(function(listener) {
+      //     if (listener[eventName] !== undefined && typeof listener[eventName] === 'function') {
+      //       listener[eventName](data);
+      //     }
+      //   });
+      // };
+      app.trigger = function(eventName, data) {
+        this.listeners[eventName].forEach(function(handler) {
+          if (typeof handler === 'function') {
+            handler(data);
+          }
+        });
+      };
     </script>
     <script type="text/javascript" src="event-aggregator-pos.js"></script>
     </script>

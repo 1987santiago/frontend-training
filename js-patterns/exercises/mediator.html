@@ -8,22 +8,48 @@
     var mediator = (function() {
       var listeners = {};
       return {
-        publish: function() {} // should receive an event name and a potencial parameter to send to all the listeners
-      , subscribe: function() {} // should receive an event name and a function to act as handler
-      , installTo: function() {} // should add the "subscribe" and "publish" methods to the received object
+        publish: function(eventName, data) {
+          listeners[eventName].forEach(function(handler) {
+            if (typeof handler === 'function') {
+              handler(data);
+            }
+          });
+        } // should receive an event name and a potencial parameter to send to all the listeners
+      , subscribe: function(eventName, handler) {
+        if (listeners[eventName]) {
+          listeners[eventName].push(handler);
+        } else {
+          listeners[eventName] = [handler];
+        }
+      } // should receive an event name and a function to act as handler
+      , installTo: function(obj) {
+          obj.publish = obj.publish || this.publish;
+          obj.subscribe = obj.subscribe || this.subscribe;
+        } // should add the "subscribe" and "publish" methods to the received object
       }
       // HINT: you can re-use the implementation of the event aggregator excercise
     })();
+
     document.addEventListener("DOMContentLoaded", function() {
       // listen the event of the button, collect the data from the UI and publish a "newMessage" event
+      var form = document.getElementById('chatForm');
+      
+      mediator.installTo(form);
+
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        this.publish('sendData', form);
+      });
 
       // Append new messages as they come through
       function displayChatMessage(data) {
+        console.log(data);
         // add the data message to the element with ID "chatResult"
         // the format should be '{yourName} said "{message}" to {sendTo} (hh:mm:ss)''
       }
 
       // Subscribe to new chat messages being submitted via the mediator on the event "newMessage"
+      form.subscribe('sendData', displayChatMessage);
     });
   </script>
   <script type="text/javascript" src="mediator-pos.js"></script>
@@ -32,13 +58,13 @@
  <h1>Chat</h1>
 <form id="chatForm">
     <label for="fromBox">Your Name:</label>
-    <input id="fromBox" type="text"/>
+    <input id="fromBox" name="formBox" type="text"/>
     <br />
     <label for="toBox">Send to:</label>
-    <input id="toBox" type="text"/>
+    <input id="toBox" name="toBox" type="text"/>
     <br />
     <label for="chatBox">Message:</label>
-    <input id="chatBox" type="text"/>
+    <input id="chatBox" name="chatBox" type="text"/>
     <button action="submit">Chat</button>
 </form>
 
