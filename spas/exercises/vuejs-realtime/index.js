@@ -31,13 +31,18 @@ function broadcastUserConnectionsToEveryone() {
 io.on('connection', (socket) => {
   console.log('A user has connected.');
   // add socket to the "users" list
+  users.push(socket);
 
   // broadcast user connection
+  broadcastUserConnectionsToEveryone();
 
   socket.on('disconnect', () => {
-    console.log('A user disconnected.')
-    // remote socket from "users" list
+    console.log('A user disconnected.');
+    // remove socket from "users" list
+    const index = users.indexOf(socket);
+    users.splice(index, 1);
 
     // broadcast user connection
+    broadcastUserConnectionsToEveryone();
   });
 });

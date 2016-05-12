@@ -7,9 +7,10 @@
       </a>
       <h1><a href="#/">Hacker News</a>    </h1>
       <font color="#ffffff">{{title}}</font>
+      <!-- add html to display the usersConnections property -->
+      Connected users : {{usersConnections}}
     </div>
 
-    <!-- add html to display the usersConnections property -->
     <!-- main view -->
     <router-view
       class="view"
@@ -39,6 +40,11 @@ export default {
     store.on('titleChange', this.updateTitle);
 
     // subscribe to the "usersConnection" event and update the usersConnections property
+    const that = this;
+    store.io.on('usersConnections', (data) => {
+      that.usersConnections = data.count;
+    });
+    // store.io.on('usersConnections', this.updateUsersConnections);
   }, 
   destroyed () {
     store.removeListener('titleChange', this.updateTitle)
@@ -46,6 +52,10 @@ export default {
   methods: {
     updateTitle (title) {
       this.title = title;
+    },
+    usersConnections (data) {
+      console.log('data', data);
+      this.usersConnections = data.count;
     }
   }
 }
